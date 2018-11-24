@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AnvilRestrict extends JavaPlugin {
@@ -14,7 +13,6 @@ public class AnvilRestrict extends JavaPlugin {
 	public static ArrayList<ArrayList<String>> noEntry = new ArrayList<ArrayList<String>>();
 	public static ArrayList<ArrayList<String>> noRename = new ArrayList<ArrayList<String>>();
 
-	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("anvilrestrict")) {
 			if (sender.hasPermission("anvilrestrict.admin")) {
@@ -25,6 +23,9 @@ public class AnvilRestrict extends JavaPlugin {
 					sender.sendMessage("§8[§7AnvilRestrict§8] §cAliases: §7[ar, anvilr]");
 				} else {
 					if (args[0].equalsIgnoreCase("reload")) {
+						if (!new File(getDataFolder(), "config.yml").exists()) {
+							saveDefaultConfig();
+						}
 						reloadConfig();
 						setup();
 						sender.sendMessage("§8[§7AnvilRestrict§8] §fConfig reloaded!");
@@ -42,7 +43,7 @@ public class AnvilRestrict extends JavaPlugin {
 		return true;
 	}
 
-	@EventHandler
+	@Override
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new ARListener(this), this);
 		if (!new File(getDataFolder(), "config.yml").exists()) {
@@ -50,6 +51,7 @@ public class AnvilRestrict extends JavaPlugin {
 		}
 		setup();
 	}
+
 	public void setup() {
 		noEntryAll = Boolean.valueOf(getConfig().getBoolean("NoEntryAll"));
 		noRenameAll = Boolean.valueOf(getConfig().getBoolean("NoRenameAll"));
