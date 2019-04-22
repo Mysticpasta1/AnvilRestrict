@@ -7,3 +7,9 @@ NoEntry: id|SAND,name|Proximity Sensor
 NoRename: id|RED_SAND
 NoRenameAll: false
 NoEntryAll: false
+
+messages:
+  noentry: '&cEntering that item in the Anvil is disabled.'
+  norename: '&cRenaming that item is disabled.'
+  all_rename_disabled: '&cRenaming items is disabled.'
+  all_entry_disabled: '&cThe Anvil is disabled.'

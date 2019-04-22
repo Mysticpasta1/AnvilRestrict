@@ -1,0 +1,12 @@
+name: AnvilRestrict
+version: 1.3
+author: poma123, the original author was Ugleh
+main: me.poma123.anvilrestrict.AnvilRestrict
+api-version: 1.13
+commands:
+    anvilrestrict:
+        usage: /<command>
+        aliases: [ar, anvilr]
+permissions:
+    anvilrestrict.admin:
+        default: op

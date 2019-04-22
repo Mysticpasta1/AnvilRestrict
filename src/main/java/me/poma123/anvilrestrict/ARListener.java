@@ -12,6 +12,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
+import static me.poma123.anvilrestrict.AnvilRestrict.withColors;
+
 public class ARListener implements Listener {
 	@SuppressWarnings("unused")
 	private AnvilRestrict plugin;
@@ -31,7 +33,7 @@ public class ARListener implements Listener {
 			if (event.getInventory().getType() == InventoryType.ANVIL) {
 				if (AnvilRestrict.noEntryAll.booleanValue()) {
 					event.setCancelled(true);
-					p.sendMessage(ChatColor.RED + "The Anvil is disabled.");
+					p.sendMessage(withColors(plugin.getConfig().getString("messages.all_entry_disabled"), '&'));
 				} else if (AnvilRestrict.noRenameAll.booleanValue()) {
 					if (item != null) {
 						String tempname = "";
@@ -40,7 +42,7 @@ public class ARListener implements Listener {
 						}
 						if (!tempname.equals(event.getInventory().getItem(0).getItemMeta().getDisplayName())) {
 							event.setCancelled(true);
-							p.sendMessage(ChatColor.RED + "Renaming items is disabled.");
+							p.sendMessage(withColors(plugin.getConfig().getString("messages.all_rename_disabled"), '&'));
 						}
 					}
 				} else {
@@ -52,7 +54,7 @@ public class ARListener implements Listener {
 											&& (item.getType() == Material.getMaterial((String) noEntryData.get(1)))) {
 										done = Boolean.valueOf(true);
 										event.setCancelled(true);
-										p.sendMessage(ChatColor.RED + "Entering that item in the Anvil is disabled.");
+										p.sendMessage(withColors(plugin.getConfig().getString("messages.noentry"), '&'));
 									}
 								} else if ((((String) noEntryData.get(0)).equalsIgnoreCase("name"))
 										&& (item.getItemMeta() != null) && (item.getItemMeta().hasDisplayName())) {
@@ -60,7 +62,7 @@ public class ARListener implements Listener {
 											.indexOf(((String) noEntryData.get(1)).toLowerCase()) >= 0) {
 										done = Boolean.valueOf(true);
 										event.setCancelled(true);
-										p.sendMessage(ChatColor.RED + "Entering that item in the Anvil is disabled.");
+										p.sendMessage(withColors(plugin.getConfig().getString("messages.noentry"), '&'));
 									}
 								}
 							}
@@ -81,6 +83,7 @@ public class ARListener implements Listener {
 													event.getInventory().getItem(0).getItemMeta().getDisplayName())) {
 												event.setCancelled(true);
 												p.sendMessage(ChatColor.RED + "Renaming that item is disabled.");
+												p.sendMessage(withColors(plugin.getConfig().getString("messages.norename"), '&'));
 											}
 										}
 									} else if ((((String) noRenameData.get(0)).equalsIgnoreCase("name"))
@@ -89,7 +92,7 @@ public class ARListener implements Listener {
 										if (event.getInventory().getItem(0).getItemMeta().getDisplayName().toLowerCase()
 												.indexOf(((String) noRenameData.get(1)).toLowerCase()) >= 0) {
 											event.setCancelled(true);
-											p.sendMessage(ChatColor.RED + "Renaming that item is disabled.");
+											p.sendMessage(withColors(plugin.getConfig().getString("messages.norename"), '&'));
 										}
 									}
 								}
