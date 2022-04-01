@@ -1,15 +1,13 @@
-#id:MATERIAL_NAME is to represent an items material id.
-#name:string is to represent part of the display name of an item
-#NoEntry prevents the item from being used in an Anvil
-#NoRename prevents the rename of an item.
-
-NoEntry: id|SAND,name|Proximity Sensor
-NoRename: id|RED_SAND
+# Prevents all items from being renamed in an Anvil
 NoRenameAll: false
+
+# Prevents all items from being used in an Anvil
 NoEntryAll: false
 
-messages:
-  noentry: '&cEntering that item in the Anvil is disabled.'
-  norename: '&cRenaming that item is disabled.'
-  all_rename_disabled: '&cRenaming items is disabled.'
-  all_entry_disabled: '&cThe Anvil is disabled.'
+# Prevents defined items from being used in an Anvil
+# Example - id:<MATERIAL_NAME>,name|<ITEM_NAME>
+NoEntry: id|SAND,name|Proximity Sensor
+
+# Prevents defined items from being renamed in an Anvil
+# Example - id:<MATERIAL_NAME>,name|<ITEM_NAME>
+NoRename: id|RED_SAND

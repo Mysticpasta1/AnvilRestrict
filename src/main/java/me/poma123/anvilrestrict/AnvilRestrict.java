@@ -2,12 +2,14 @@ package me.poma123.anvilrestrict;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AnvilRestrict extends JavaPlugin {
@@ -20,32 +22,22 @@ public class AnvilRestrict extends JavaPlugin {
         if (cmd.getName().equalsIgnoreCase("anvilrestrict")) {
             if (sender.hasPermission("anvilrestrict.admin")) {
                 if (args.length == 0) {
-                    sender.sendMessage("§8[§7AnvilRestrict§8] §cAnvilRestrict HELP:");
-                    sender.sendMessage("§8[§7AnvilRestrict§8]");
-                    sender.sendMessage("§8[§7AnvilRestrict§8] §6/anvilrestrict reload §f- Reload config");
-                    sender.sendMessage("§8[§7AnvilRestrict§8] §cAliases: §7[ar, anvilr]");
+                    for (String row : getConfig().getStringList("messages.help"))
+                        sender.sendMessage(withFormatting(row));
                 } else {
                     if (args[0].equalsIgnoreCase("reload")) {
                         saveDefaultConfigIfNotExists();
-                        if (getConfig().getConfigurationSection("messages") == null) {
-                            getConfig().set("messages.noentry", "&cEntering that item in the Anvil is disabled.");
-                            getConfig().set("messages.norename", "&cRenaming that item is disabled.");
-                            getConfig().set("messages.all_entry_disabled", "&cThe Anvil is disabled.");
-                            getConfig().set("messages.all_rename_disabled", "&cRenaming items is disabled.");
-                            saveConfig();
-                        }
+                        updateConfig();
                         reloadConfig();
                         setup();
-                        sender.sendMessage("§8[§7AnvilRestrict§8] §fConfig reloaded!");
+                        sender.sendMessage(withFormatting(getConfig().getString("messages.config_reloaded")));
                     } else {
-                        sender.sendMessage("§8[§7AnvilRestrict§8] §cAnvilRestrict HELP:");
-                        sender.sendMessage("§8[§7AnvilRestrict§8]");
-                        sender.sendMessage("§8[§7AnvilRestrict§8] §6/anvilrestrict reload §f- Reload config");
-                        sender.sendMessage("§8[§7AnvilRestrict§8] §cAliases: §7[ar, anvilr]");
+                        for (String row : getConfig().getStringList("messages.help"))
+                            sender.sendMessage(withFormatting(row));
                     }
                 }
             } else {
-                sender.sendMessage("§cYou don't have permission to perform this command!");
+                sender.sendMessage(withFormatting(getConfig().getString("messages.nopermission")));
             }
         }
         return true;
@@ -53,20 +45,46 @@ public class AnvilRestrict extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new ARListener(this), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
+        updateConfig();
         saveDefaultConfigIfNotExists();
-        if (getConfig().getConfigurationSection("messages") == null) {
-            getConfig().set("messages.noentry", "&cEntering that item in the Anvil is disabled.");
-            getConfig().set("messages.norename", "&cRenaming that item is disabled.");
-            getConfig().set("messages.all_entry_disabled", "&cThe Anvil is disabled.");
-            getConfig().set("messages.all_rename_disabled", "&cRenaming items is disabled.");
-            saveConfig();
-        }
         setup();
     }
 
-    public static String withColors(String input, char ch) {
-        return ChatColor.translateAlternateColorCodes(ch, input);
+    public String withFormatting(String input) {
+        return ChatColor.translateAlternateColorCodes('&', getConfig().getString("messages.prefix") + " &r" + input);
+    }
+
+    private void updateConfig() {
+        ConfigurationSection messagesSection = getConfig().getConfigurationSection("messages");
+
+        if(messagesSection == null)
+            getConfig().createSection("messages");
+
+        if (messagesSection.get("prefix") == null)
+            messagesSection.set("prefix", "&8[&7AnvilRestrict&8]");
+        if (messagesSection.get("noentry") == null)
+            messagesSection.set("noentry", "&cEntering that item in the Anvil is disabled.");
+        if (messagesSection.get("norename") == null)
+            messagesSection.set("norename", "&cRenaming that item is disabled.");
+        if (messagesSection.get("all_entry_disabled") == null)
+            messagesSection.set("all_entry_disabled", "&cThe Anvil is disabled.");
+        if (messagesSection.get("all_rename_disabled") == null)
+            messagesSection.set("all_rename_disabled", "&cRenaming items is disabled.");
+        if (messagesSection.get("config_reloaded") == null)
+            messagesSection.set("config_reloaded", "&fConfig reloaded!");
+        if (messagesSection.get("nopermission") == null)
+            messagesSection.set("nopermission", "&cYou don't have permission to perform this command!");
+        if (messagesSection.get("help") == null)
+            messagesSection.set("help", new ArrayList<>(
+                    Arrays.asList(
+                            "&cAnvilRestrict HELP:",
+                            "",
+                            "&6/anvilrestrict reload &f- Reload config",
+                            "&cAliases: &7[ar, anvilr]"
+                    ))
+            );
+        saveConfig();
     }
 
     public void setup() {

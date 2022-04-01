@@ -3,7 +3,6 @@ package me.poma123.anvilrestrict;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,18 +11,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
-import static me.poma123.anvilrestrict.AnvilRestrict.withColors;
-
-public class ARListener implements Listener {
+public class InventoryListener implements Listener {
     private final AnvilRestrict plugin;
 
-    public ARListener(AnvilRestrict p) {
+    public InventoryListener(AnvilRestrict p) {
         this.plugin = p;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
-        //debug	event.getWhoClicked().sendMessage(String.valueOf(event.getSlot()));
         try {
             if (event.getSlot() != 64537) {
                 Player p = (Player) event.getWhoClicked();
@@ -32,7 +28,7 @@ public class ARListener implements Listener {
                 if (event.getInventory().getType() == InventoryType.ANVIL) {
                     if (AnvilRestrict.noEntryAll) {
                         event.setCancelled(true);
-                        p.sendMessage(withColors(plugin.getConfig().getString("messages.all_entry_disabled"), '&'));
+                        p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.all_entry_disabled")));
                     } else if (AnvilRestrict.noRenameAll) {
                         if (item != null) {
                             String tempname = "";
@@ -41,7 +37,7 @@ public class ARListener implements Listener {
                             }
                             if (!tempname.equals(Objects.requireNonNull(Objects.requireNonNull(event.getInventory().getItem(0)).getItemMeta()).getDisplayName())) {
                                 event.setCancelled(true);
-                                p.sendMessage(withColors(plugin.getConfig().getString("messages.all_rename_disabled"), '&'));
+                                p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.all_rename_disabled")));
                             }
                         }
                     } else {
@@ -53,7 +49,7 @@ public class ARListener implements Listener {
                                                 && (item.getType() == Material.getMaterial(noEntryData.get(1)))) {
                                             done = Boolean.TRUE;
                                             event.setCancelled(true);
-                                            p.sendMessage(withColors(plugin.getConfig().getString("messages.noentry"), '&'));
+                                            p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.noentry")));
                                         }
                                     } else {
                                         if ((noEntryData.get(0).equalsIgnoreCase("name"))) {
@@ -62,7 +58,7 @@ public class ARListener implements Listener {
                                                 if (item.getItemMeta().getDisplayName().toLowerCase().contains(noEntryData.get(1).toLowerCase())) {
                                                     done = Boolean.TRUE;
                                                     event.setCancelled(true);
-                                                    p.sendMessage(withColors(plugin.getConfig().getString("messages.noentry"), '&'));
+                                                    p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.noentry")));
                                                 }
                                             }
                                         }
@@ -84,8 +80,7 @@ public class ARListener implements Listener {
                                                 if (!tempname.equals(
                                                         Objects.requireNonNull(Objects.requireNonNull(event.getInventory().getItem(0)).getItemMeta()).getDisplayName())) {
                                                     event.setCancelled(true);
-                                                    p.sendMessage(ChatColor.RED + "Renaming that item is disabled.");
-                                                    p.sendMessage(withColors(plugin.getConfig().getString("messages.norename"), '&'));
+                                                    p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.norename")));
                                                 }
                                             }
                                         } else if ((noRenameData.get(0).equalsIgnoreCase("name"))
@@ -93,7 +88,7 @@ public class ARListener implements Listener {
                                                 && (Objects.requireNonNull(Objects.requireNonNull(event.getInventory().getItem(0)).getItemMeta()).hasDisplayName())) {
                                             if (Objects.requireNonNull(Objects.requireNonNull(event.getInventory().getItem(0)).getItemMeta()).getDisplayName().toLowerCase().contains(noRenameData.get(1).toLowerCase())) {
                                                 event.setCancelled(true);
-                                                p.sendMessage(withColors(plugin.getConfig().getString("messages.norename"), '&'));
+                                                p.sendMessage(plugin.withFormatting(plugin.getConfig().getString("messages.norename")));
                                             }
                                         }
                                     }
