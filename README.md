@@ -1,4 +1,6 @@
-# AnvilRestrict
+# AnvilRestrict (discontinued)
+
+**Notice: I have stopped working on this plugin. If you want to keep it alive, fork it or consider contributing to it by creating a Pull Request. Support is no longer available.**
 
 ### Contributions are welcome!
 
