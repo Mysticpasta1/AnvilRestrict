@@ -46,8 +46,8 @@ public class AnvilRestrict extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
-        updateConfig();
         saveDefaultConfigIfNotExists();
+        updateConfig();
         setup();
     }
 
@@ -59,7 +59,7 @@ public class AnvilRestrict extends JavaPlugin {
         ConfigurationSection messagesSection = getConfig().getConfigurationSection("messages");
 
         if(messagesSection == null)
-            getConfig().createSection("messages");
+            messagesSection = getConfig().createSection("messages");
 
         if (messagesSection.get("prefix") == null)
             messagesSection.set("prefix", "&8[&7AnvilRestrict&8]");

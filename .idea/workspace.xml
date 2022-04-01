@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11765a4a-7f1e-4fbc-85a5-5acc0e02258a" name="Changes" comment="" />
+    <list default="true" id="11765a4a-7f1e-4fbc-85a5-5acc0e02258a" name="Changes" comment="- Fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/poma123/anvilrestrict/AnvilRestrict.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/poma123/anvilrestrict/AnvilRestrict.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +45,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648806548026</updated>
-      <workItem from="1648806549414" duration="3019000" />
+      <workItem from="1648806549414" duration="3372000" />
+      <workItem from="1648814035656" duration="261000" />
     </task>
     <task id="LOCAL-00001" summary="- All messages are now translatable&#10;- Code cleanup">
       <created>1648809590562</created>
@@ -51,7 +55,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648809590562</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Removed build">
+      <created>1648809652572</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648809652572</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -59,6 +70,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- All messages are now translatable&#10;- Code cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="- All messages are now translatable&#10;- Code cleanup" />
+    <MESSAGE value="- Removed build" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Removed build" />
   </component>
 </project>
